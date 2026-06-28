@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Contact — XN Digital Studio</title>
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+</head>
+<body>
+
+  <div class="topbar">
+    <span><i class="fas fa-map-marker-alt"></i> Based in Abuja, Nigeria</span>
+    <span><i class="fas fa-circle" style="font-size:8px;color:#22c55e"></i> Available for new projects</span>
+    <span><i class="fas fa-envelope"></i> treadwayphilips@gmail.com</span>
+  </div>
+
+  <header class="navbar">
+    <a href="index.html" class="logo">
+      <div class="logo-mark">XN</div>
+      <div>XN Digital <span>Studio</span></div>
+    </a>
+    <nav class="nav-links" id="navLinks">
+      <a href="index.html">Home</a>
+      <a href="services.html">Services</a>
+      <a href="projects.html">Projects</a>
+      <a href="about.html">About</a>
+      <a href="contact.html" class="active">Contact</a>
+    </nav>
+    <div class="nav-actions">
+      <a href="contact.html" class="btn-primary" style="font-size:13.5px;padding:9px 20px;">
+        Hire Me <i class="fas fa-arrow-right"></i>
+      </a>
+      <button class="hamburger" id="hamburger" aria-label="Open menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <div class="page-hero">
+    <span class="eyebrow">Get in Touch</span>
+    <h1>Contact Me</h1>
+    <p>Have a project in mind? Let's talk — I typically respond within 24 hours.</p>
+  </div>
+
+  <section class="section">
+    <div class="contact-grid">
+
+      <!-- LEFT -->
+      <div class="contact-left">
+        <span class="eyebrow">Reach Out</span>
+        <h2>Let's Work Together</h2>
+        <p>Whether you need a new website, a brand redesign, a graphic, or a full tech consultation — I'm here to help. Send me a message and let's figure out the best solution for your goals and budget.</p>
+
+        <div class="contact-methods">
+          <div class="contact-method">
+            <div class="contact-method-icon"><i class="fas fa-envelope"></i></div>
+            <div>
+              <h5>Email</h5>
+              <p>treadwayphilips@gmail.com</p>
+            </div>
+          </div>
+          <div class="contact-method">
+            <div class="contact-method-icon"><i class="fab fa-whatsapp"></i></div>
+            <div>
+              <h5>WhatsApp</h5>
+              <p>Message me for quick replies</p>
+            </div>
+          </div>
+          <div class="contact-method">
+            <div class="contact-method-icon"><i class="fab fa-facebook-f"></i></div>
+            <div>
+              <h5>Facebook</h5>
+              <p>XN Philips</p>
+            </div>
+          </div>
+          <div class="contact-method">
+            <div class="contact-method-icon"><i class="fab fa-tiktok"></i></div>
+            <div>
+              <h5>TikTok</h5>
+              <p>@treadwayphilips22</p>
+            </div>
+          </div>
+          <div class="contact-method">
+            <div class="contact-method-icon"><i class="fas fa-map-marker-alt"></i></div>
+            <div>
+              <h5>Location</h5>
+              <p>Abuja, Nigeria — available remotely worldwide</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- RIGHT FORM -->
+      <div class="contact-form-box">
+        <h3><i class="fas fa-paper-plane" style="color:var(--blue-light);margin-right:10px"></i>Send a Message</h3>
+        <form id="contactForm" novalidate>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Your Name *</label>
+              <input type="text" name="name" placeholder="John Doe" required />
+            </div>
+            <div class="form-group">
+              <label>Email Address</label>
+              <input type="email" name="email" placeholder="you@email.com" />
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Phone / WhatsApp</label>
+            <input type="tel" name="phone" placeholder="+234 800 000 0000" />
+          </div>
+          <div class="form-group">
+            <label>Service Needed *</label>
+            <select name="service" required>
+              <option value="">— Select a Service —</option>
+              <option>Web Development — $315</option>
+              <option>UI/UX Design — $120</option>
+              <option>Graphic Design — $15</option>
+              <option>Data Analysis — $55</option>
+              <option>Cyber Security Analysis — $120</option>
+              <option>Cisco Networking Setup — $265</option>
+              <option>Multiple Services / Not Sure</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Budget Range</label>
+            <select name="budget">
+              <option value="">— Select Budget —</option>
+              <option>Under $50</option>
+              <option>$50 – $150</option>
+              <option>$150 – $350</option>
+              <option>$350+</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Your Message *</label>
+            <textarea name="message" placeholder="Tell me about your project — what do you need, when do you need it, and any other details…" required></textarea>
+          </div>
+          <button type="submit" class="btn-primary full-width">
+            Send Message <i class="fas fa-paper-plane"></i>
+          </button>
+          <p style="text-align:center;font-size:12.5px;color:var(--text-dim);margin-top:12px;">
+            <i class="fas fa-lock" style="color:var(--blue-light)"></i> I respond within 24 hours. Your info is never shared.
+          </p>
+        </form>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="section bg-dark">
+    <div class="section-header">
+      <span class="eyebrow">Common Questions</span>
+      <h2>FAQs</h2>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;max-width:900px;margin:0 auto;">
+      <div class="exp-item" style="flex-direction:column;gap:8px;">
+        <h5 style="color:var(--blue-light);">How long does a website take?</h5>
+        <p>Most websites are delivered within 3–7 days depending on complexity. Single-page sites can be done in 1–2 days.</p>
+      </div>
+      <div class="exp-item" style="flex-direction:column;gap:8px;">
+        <h5 style="color:var(--blue-light);">Do you work remotely?</h5>
+        <p>Yes — I work with clients across Nigeria and worldwide. All communication is via WhatsApp, email, or video call.</p>
+      </div>
+      <div class="exp-item" style="flex-direction:column;gap:8px;">
+        <h5 style="color:var(--blue-light);">What do you need from me to start?</h5>
+        <p>Your business name, a brief description of what you need, any reference designs you like, and your budget. I'll handle the rest.</p>
+      </div>
+      <div class="exp-item" style="flex-direction:column;gap:8px;">
+        <h5 style="color:var(--blue-light);">Do you offer revisions?</h5>
+        <p>Yes — all projects include revision rounds until you're satisfied with the result. Your approval matters more than anything.</p>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="index.html" class="logo">
+          <div class="logo-mark">XN</div>
+          <div>XN Digital <span>Studio</span></div>
+        </a>
+        <p>Professional web development and graphic design services from Abuja, Nigeria.</p>
+      </div>
+      <div class="footer-col">
+        <h5>Navigation</h5>
+        <a href="index.html">Home</a>
+        <a href="services.html">Services</a>
+        <a href="projects.html">Projects</a>
+        <a href="about.html">About</a>
+        <a href="contact.html">Contact</a>
+      </div>
+      <div class="footer-col">
+        <h5>Services</h5>
+        <a href="services.html">Web Development</a>
+        <a href="services.html">UI/UX Design</a>
+        <a href="services.html">Graphic Design</a>
+        <a href="services.html">Data Analysis</a>
+        <a href="services.html">Cisco Networking</a>
+      </div>
+      <div class="footer-col">
+        <h5>Connect</h5>
+        <a href="mailto:treadwayphilips@gmail.com"><i class="fas fa-envelope" style="margin-right:6px"></i> Email Me</a>
+        <a href="#"><i class="fab fa-facebook-f" style="margin-right:6px"></i> XN Philips</a>
+        <a href="#"><i class="fab fa-tiktok" style="margin-right:6px"></i> @treadwayphilips22</a>
+        <a href="#"><i class="fab fa-whatsapp" style="margin-right:6px"></i> WhatsApp</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2025 XN Digital Studio — Treadway Philips. All rights reserved.</p>
+      <div class="social-links">
+        <a href="#"><i class="fab fa-facebook-f"></i></a>
+        <a href="#"><i class="fab fa-tiktok"></i></a>
+        <a href="#"><i class="fab fa-whatsapp"></i></a>
+        <a href="mailto:treadwayphilips@gmail.com"><i class="fas fa-envelope"></i></a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
