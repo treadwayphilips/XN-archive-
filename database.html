@@ -1,0 +1,698 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Projects & Services — XN Digital Studio</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+
+  :root {
+    --bg: #0a0a0f;
+    --surface: #111118;
+    --surface2: #1a1a24;
+    --border: #252535;
+    --accent: #6c63ff;
+    --accent2: #00d4ff;
+    --accent3: #ff6584;
+    --accent4: #43e97b;
+    --text: #e8e8f0;
+    --muted: #6b6b88;
+    --tag-bg: #1e1e30;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Space Grotesk', sans-serif;
+    min-height: 100vh;
+  }
+
+  /* NAV — matches your site style */
+  nav {
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    padding: 0 32px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 60px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  .nav-brand {
+    display: flex; align-items: center; gap: 10px;
+    text-decoration: none; color: var(--text);
+  }
+  .nav-logo {
+    width: 34px; height: 34px;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 700; font-size: 13px; color: #fff;
+    flex-shrink: 0;
+  }
+  .nav-title { font-weight: 600; font-size: 15px; }
+  .nav-links { display: flex; gap: 6px; align-items: center; }
+  .nav-links a {
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 13.5px;
+    font-weight: 500;
+    padding: 7px 12px;
+    border-radius: 8px;
+    transition: all 0.15s;
+  }
+  .nav-links a:hover { color: var(--text); background: var(--surface2); }
+  .nav-links a.active { color: var(--accent); }
+  .nav-hire {
+    background: var(--accent);
+    color: #fff !important;
+    padding: 8px 16px !important;
+    border-radius: 8px !important;
+  }
+  .nav-hire:hover { background: #5a52e0 !important; opacity: 1; }
+
+  /* HERO */
+  .hero {
+    padding: 64px 32px 48px;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+  .hero-eyebrow {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--accent2);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+  .hero h1 {
+    font-size: clamp(32px, 5vw, 52px);
+    font-weight: 700;
+    line-height: 1.1;
+    margin-bottom: 16px;
+  }
+  .hero h1 span {
+    background: linear-gradient(90deg, var(--accent), var(--accent2));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .hero-sub {
+    color: var(--muted);
+    font-size: 16px;
+    max-width: 540px;
+    line-height: 1.6;
+    margin-bottom: 36px;
+  }
+
+  /* STATS */
+  .stats-row {
+    display: flex;
+    gap: 32px;
+    flex-wrap: wrap;
+    padding-bottom: 48px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 48px;
+  }
+  .stat { }
+  .stat-num {
+    font-size: 36px;
+    font-weight: 700;
+    font-family: 'JetBrains Mono', monospace;
+    background: linear-gradient(90deg, var(--accent), var(--accent2));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .stat-lbl { font-size: 12px; color: var(--muted); margin-top: 2px; }
+
+  /* SECTION */
+  .section { max-width: 1100px; margin: 0 auto; padding: 0 32px 64px; }
+  .section-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 24px;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  .section-title {
+    font-size: 22px;
+    font-weight: 600;
+  }
+  .section-count {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: var(--muted);
+    background: var(--surface2);
+    padding: 4px 10px;
+    border-radius: 20px;
+    border: 1px solid var(--border);
+  }
+
+  /* FILTER TABS */
+  .filter-row {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+  }
+  .ftab {
+    padding: 7px 16px;
+    border-radius: 20px;
+    font-size: 12.5px;
+    font-weight: 500;
+    cursor: pointer;
+    border: 1px solid var(--border);
+    background: var(--surface2);
+    color: var(--muted);
+    transition: all 0.15s;
+    font-family: 'Space Grotesk', sans-serif;
+  }
+  .ftab:hover { color: var(--text); border-color: var(--accent); }
+  .ftab.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+
+  /* SEARCH */
+  .search-wrap { margin-bottom: 20px; }
+  .search-input {
+    width: 100%;
+    max-width: 380px;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 10px 16px;
+    color: var(--text);
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 13.5px;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  .search-input:focus { border-color: var(--accent); }
+  .search-input::placeholder { color: var(--muted); }
+
+  /* PROJECT CARDS GRID */
+  .projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 20px;
+  }
+  .project-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    overflow: hidden;
+    transition: border-color 0.2s, transform 0.2s;
+  }
+  .project-card:hover {
+    border-color: var(--accent);
+    transform: translateY(-2px);
+  }
+  .card-top {
+    padding: 20px 20px 16px;
+    border-bottom: 1px solid var(--border);
+  }
+  .card-type-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
+  }
+  .card-badge {
+    font-size: 11px;
+    font-weight: 600;
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .badge-web { background: rgba(108,99,255,0.15); color: var(--accent); }
+  .badge-brand { background: rgba(255,101,132,0.12); color: var(--accent3); }
+  .badge-print { background: rgba(255,200,50,0.1); color: #ffc832; }
+  .badge-personal { background: rgba(67,233,123,0.12); color: var(--accent4); }
+  .card-id {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: var(--muted);
+  }
+  .card-name {
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: var(--text);
+  }
+  .card-desc {
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.55;
+  }
+  .card-bottom {
+    padding: 14px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+  .card-tags { display: flex; flex-wrap: wrap; gap: 4px; }
+  .ctag {
+    font-size: 10.5px;
+    padding: 3px 8px;
+    border-radius: 4px;
+    background: var(--tag-bg);
+    color: var(--muted);
+    font-family: 'JetBrains Mono', monospace;
+    border: 1px solid var(--border);
+  }
+  .card-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--accent2);
+    text-decoration: none;
+    padding: 6px 12px;
+    border: 1px solid rgba(0,212,255,0.25);
+    border-radius: 7px;
+    transition: all 0.15s;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+  .card-link:hover { background: rgba(0,212,255,0.08); border-color: var(--accent2); }
+
+  /* SERVICES TABLE */
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 16px;
+  }
+  .svc-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 24px;
+    transition: border-color 0.2s;
+  }
+  .svc-card:hover { border-color: var(--accent); }
+  .svc-icon {
+    width: 40px; height: 40px;
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px;
+    margin-bottom: 16px;
+  }
+  .svc-name { font-size: 16px; font-weight: 600; margin-bottom: 8px; }
+  .svc-desc { font-size: 13px; color: var(--muted); line-height: 1.55; margin-bottom: 16px; }
+  .svc-includes { margin-bottom: 16px; }
+  .svc-includes li {
+    font-size: 12.5px;
+    color: var(--muted);
+    padding: 3px 0;
+    list-style: none;
+    display: flex;
+    align-items: center;
+    gap: 7px;
+  }
+  .svc-includes li::before {
+    content: '→';
+    color: var(--accent2);
+    font-size: 11px;
+    flex-shrink: 0;
+  }
+  .svc-price {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--accent4);
+  }
+  .svc-unit { font-size: 12px; color: var(--muted); margin-top: 2px; }
+  .svc-hire {
+    display: inline-block;
+    margin-top: 14px;
+    background: var(--accent);
+    color: #fff;
+    font-size: 12.5px;
+    font-weight: 600;
+    padding: 8px 18px;
+    border-radius: 8px;
+    text-decoration: none;
+    transition: background 0.15s;
+  }
+  .svc-hire:hover { background: #5a52e0; }
+
+  /* SKILLS */
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 12px;
+  }
+  .skill-row {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px 18px;
+  }
+  .skill-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
+  }
+  .skill-name { font-size: 14px; font-weight: 600; }
+  .skill-level {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: var(--muted);
+  }
+  .skill-bar {
+    height: 5px;
+    background: var(--surface2);
+    border-radius: 3px;
+    overflow: hidden;
+    margin-bottom: 8px;
+  }
+  .skill-fill {
+    height: 100%;
+    border-radius: 3px;
+    transition: width 0.6s ease;
+  }
+  .skill-cat {
+    font-size: 11px;
+    color: var(--muted);
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  /* EMPTY STATE */
+  .empty-state {
+    text-align: center;
+    padding: 60px 20px;
+    color: var(--muted);
+  }
+  .empty-icon { font-size: 36px; margin-bottom: 12px; }
+  .empty-msg { font-size: 14px; }
+
+  /* CTA BANNER */
+  .cta-banner {
+    max-width: 1100px;
+    margin: 0 auto 80px;
+    padding: 0 32px;
+  }
+  .cta-inner {
+    background: linear-gradient(135deg, rgba(108,99,255,0.15), rgba(0,212,255,0.08));
+    border: 1px solid rgba(108,99,255,0.3);
+    border-radius: 16px;
+    padding: 48px;
+    text-align: center;
+  }
+  .cta-inner h2 { font-size: 28px; font-weight: 700; margin-bottom: 12px; }
+  .cta-inner p { color: var(--muted); margin-bottom: 28px; font-size: 15px; }
+  .cta-btn {
+    display: inline-block;
+    background: var(--accent);
+    color: #fff;
+    font-weight: 600;
+    font-size: 14px;
+    padding: 12px 28px;
+    border-radius: 10px;
+    text-decoration: none;
+    transition: background 0.15s;
+  }
+  .cta-btn:hover { background: #5a52e0; }
+
+  /* FOOTER */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 32px;
+    text-align: center;
+    color: var(--muted);
+    font-size: 13px;
+  }
+  footer a { color: var(--accent2); text-decoration: none; }
+
+  @media (max-width: 640px) {
+    .hero { padding: 40px 20px 32px; }
+    .section { padding: 0 20px 48px; }
+    .cta-banner { padding: 0 20px; }
+    .cta-inner { padding: 32px 20px; }
+    nav { padding: 0 16px; }
+    .nav-links { display: none; }
+    .projects-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-brand" href="index.html">
+    <div class="nav-logo">XN</div>
+    <span class="nav-title">XN Digital Studio</span>
+  </a>
+  <div class="nav-links">
+    <a href="index.html">Home</a>
+    <a href="services.html">Services</a>
+    <a href="projects.html">Projects</a>
+    <a href="database.html" class="active">Database</a>
+    <a href="about.html">About</a>
+    <a href="contact.html" class="nav-hire">Hire Me</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-eyebrow">XN Digital Studio — Live Portfolio Database</div>
+  <h1>Work, Services &<br><span>Skills Index</span></h1>
+  <p class="hero-sub">A live record of every project completed, service offered, and skill mastered — updated in real time.</p>
+
+  <div class="stats-row" id="stats-row">
+    <div class="stat">
+      <div class="stat-num" id="stat-projects">—</div>
+      <div class="stat-lbl">Projects Completed</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num" id="stat-services">—</div>
+      <div class="stat-lbl">Services Offered</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">2+</div>
+      <div class="stat-lbl">Years Experience</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">100%</div>
+      <div class="stat-lbl">Client Satisfaction</div>
+    </div>
+  </div>
+</div>
+
+<!-- PROJECTS -->
+<div class="section">
+  <div class="section-header">
+    <div>
+      <div class="section-title">Projects</div>
+    </div>
+    <span class="section-count" id="proj-count">0 records</span>
+  </div>
+  <div class="filter-row">
+    <button class="ftab active" onclick="filterProjects('all', this)">All</button>
+    <button class="ftab" onclick="filterProjects('Web', this)">Web</button>
+    <button class="ftab" onclick="filterProjects('Brand', this)">Brand Design</button>
+    <button class="ftab" onclick="filterProjects('Print', this)">Print</button>
+    <button class="ftab" onclick="filterProjects('Personal', this)">Personal</button>
+  </div>
+  <div class="search-wrap">
+    <input class="search-input" type="text" placeholder="Search projects by name or tech..." oninput="searchProjects(this.value)" />
+  </div>
+  <div class="projects-grid" id="projects-grid">
+    <div class="empty-state"><div class="empty-icon">📂</div><div class="empty-msg">Loading projects...</div></div>
+  </div>
+</div>
+
+<!-- SERVICES -->
+<div class="section">
+  <div class="section-header">
+    <div class="section-title">Services</div>
+    <span class="section-count" id="svc-count">0 records</span>
+  </div>
+  <div class="services-grid" id="services-grid">
+    <div class="empty-state"><div class="empty-icon">⚙️</div><div class="empty-msg">Loading services...</div></div>
+  </div>
+</div>
+
+<!-- SKILLS -->
+<div class="section">
+  <div class="section-header">
+    <div class="section-title">Tech Skills</div>
+    <span class="section-count" id="skills-count">0 records</span>
+  </div>
+  <div class="skills-grid" id="skills-grid">
+    <div class="empty-state"><div class="empty-icon">🛠️</div><div class="empty-msg">Loading skills...</div></div>
+  </div>
+</div>
+
+<!-- CTA -->
+<div class="cta-banner">
+  <div class="cta-inner">
+    <h2>Ready to Build Something?</h2>
+    <p>I'm available for freelance web development and graphic design projects right now.</p>
+    <a href="contact.html" class="cta-btn">Start a Project →</a>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <p>© 2025 XN Digital Studio — Treadway Philips &nbsp;·&nbsp; <a href="mailto:treadwayphilips@gmail.com">treadwayphilips@gmail.com</a></p>
+</footer>
+
+<script>
+// ── DEFAULT SEED DATA (shown if admin has never saved anything) ──
+const DEFAULT_PROJECTS = [
+  { id:'PRJ-001', name:'PhilipsBlock Finance', category:'Web', type:'Web App', desc:'Crypto finance SPA with live CoinGecko API prices, interactive games, price ticker, and a JavaScript router — single HTML file on GitHub Pages.', tags:['HTML','CSS','JavaScript','CoinGecko API'], link:'https://treadwayphilips.github.io/' },
+  { id:'PRJ-002', name:'Pwesh Palate', category:'Web', type:'Restaurant Site', desc:'Multi-page Nigerian restaurant website with food menu, category filters, online ordering/booking form, and full mobile responsiveness.', tags:['HTML','CSS','JavaScript'], link:'https://treadwayphilips.github.io/pweshpalate/' },
+  { id:'PRJ-003', name:'Trebach Shopping Store', category:'Web', type:'E-Commerce', desc:'Online store with Add to Cart, quantity controls, price filters, sort options, and a checkout flow — deployed on GitHub Pages.', tags:['HTML','CSS','JavaScript','E-Commerce'], link:'https://treadwayphilips.github.io/Trebach---Shopping-Web/' },
+  { id:'PRJ-004', name:'Stainlessstill Laundry & Cleaning', category:'Brand', type:'Brand Design', desc:'Full branding package — business cards, storefront banners, and logo with pixel-level placement for a local laundry business in Abuja.', tags:['Graphic Design','Branding','Print'], link:'' },
+  { id:'PRJ-005', name:'Joy Stitches Fashion Brand', category:'Brand', type:'Brand Design', desc:'Promotional banners in wine/burgundy and navy/gold variants for an Abuja fashion brand. Includes PDF flyer conversion for print.', tags:['Graphic Design','Fashion','Banner'], link:'' },
+  { id:'PRJ-006', name:"Paul's Kraft Furniture", category:'Brand', type:'Brand Design', desc:'Multi-variant promotional banners for a furniture brand, modelled after a precise reference layout — delivered in multiple colour styles.', tags:['Graphic Design','Promotional'], link:'' },
+  { id:'PRJ-007', name:'Presh Essentials', category:'Brand', type:'Brand Identity', desc:'Complete brand identity for a nightwear & deodorant company — logos, brand cards, and promotional banners across multiple colour variants.', tags:['Logo Design','Branding','Multi-variant'], link:'' },
+  { id:'PRJ-008', name:'JOBITECH Instructor ID Card', category:'Print', type:'Print Design', desc:'Print-ready instructor ID card for JOBITECH Institute of Technology Kubwa, Abuja — professional print standards, exported as JPG.', tags:['Print Design','ID Card'], link:'' },
+  { id:'PRJ-009', name:'XN Digital Studio Brand', category:'Personal', type:'Personal Brand', desc:'Personal tech brand — futuristic banners in Cyber Blue, Neon Purple & Gold Tech variants, portfolio intro cards, and brand auth assets.', tags:['Personal','Branding','Multi-variant'], link:'about.html' },
+];
+
+const DEFAULT_SERVICES = [
+  { id:'SVC-001', name:'Web Development', icon:'💻', desc:'Custom websites built from scratch — fast, responsive, and ready to deploy on any platform.', includes:['HTML, CSS & JavaScript','Mobile-first & responsive','GitHub Pages / Netlify deploy','Portfolio, business & e-commerce'], price:'$315', unit:'per website' },
+  { id:'SVC-002', name:'UI/UX Design', icon:'🎨', desc:'User-centred interface design that looks great and converts visitors into customers.', includes:['Wireframes & prototypes','Modern, clean layouts','Design systems & style guides'], price:'$120', unit:'per project' },
+  { id:'SVC-003', name:'Graphic Design', icon:'✏️', desc:'Logos, banners, business cards, and brand identities that make your business unforgettable.', includes:['Logo & brand identity','Social media graphics','Flyers, banners & print'], price:'$15', unit:'per design' },
+  { id:'SVC-004', name:'Data Analysis', icon:'📊', desc:'Data-driven insights and visual reports for business decision-making.', includes:['Data cleaning & processing','Charts & dashboards','Insight reports'], price:'Contact', unit:'for quote' },
+  { id:'SVC-005', name:'Cisco Networking', icon:'🌐', desc:'Network setup, configuration, and maintenance for small businesses.', includes:['Network design & setup','Hardware configuration','Printer & device servicing'], price:'Contact', unit:'for quote' },
+];
+
+const DEFAULT_SKILLS = [
+  { name:'HTML5', category:'Web Dev', level:'Expert', pct:95, color:'#6c63ff' },
+  { name:'CSS3', category:'Web Dev', level:'Expert', pct:92, color:'#6c63ff' },
+  { name:'JavaScript', category:'Web Dev', level:'Advanced', pct:85, color:'#6c63ff' },
+  { name:'REST APIs', category:'Web Dev', level:'Proficient', pct:75, color:'#00d4ff' },
+  { name:'GitHub Pages', category:'Deployment', level:'Expert', pct:90, color:'#00d4ff' },
+  { name:'Responsive Design', category:'UI/UX', level:'Expert', pct:90, color:'#6c63ff' },
+  { name:'UI/UX Design', category:'UI/UX', level:'Advanced', pct:82, color:'#00d4ff' },
+  { name:'Logo Design', category:'Graphic', level:'Advanced', pct:88, color:'#ff6584' },
+  { name:'Brand Identity', category:'Graphic', level:'Advanced', pct:86, color:'#ff6584' },
+  { name:'Print Design', category:'Graphic', level:'Proficient', pct:80, color:'#ff6584' },
+  { name:'Hardware Repair', category:'ICT', level:'Proficient', pct:70, color:'#ffc832' },
+  { name:'Cisco Networking', category:'ICT', level:'Working', pct:65, color:'#ffc832' },
+];
+
+// ── LOAD DATA (from localStorage if admin saved, else use defaults) ──
+function getData(key, fallback) {
+  try {
+    const raw = localStorage.getItem('xndb_' + key);
+    return raw ? JSON.parse(raw) : fallback;
+  } catch(e) { return fallback; }
+}
+
+let allProjects = getData('projects', DEFAULT_PROJECTS);
+let currentFilter = 'all';
+let currentSearch = '';
+
+// ── BADGE HELPERS ──
+function badgeClass(cat) {
+  if (cat === 'Web') return 'badge-web';
+  if (cat === 'Brand') return 'badge-brand';
+  if (cat === 'Print') return 'badge-print';
+  if (cat === 'Personal') return 'badge-personal';
+  return 'badge-web';
+}
+
+// ── RENDER PROJECTS ──
+function renderProjects() {
+  const grid = document.getElementById('projects-grid');
+  let filtered = allProjects;
+  if (currentFilter !== 'all') filtered = filtered.filter(p => p.category === currentFilter);
+  if (currentSearch) {
+    const q = currentSearch.toLowerCase();
+    filtered = filtered.filter(p =>
+      p.name.toLowerCase().includes(q) ||
+      p.desc.toLowerCase().includes(q) ||
+      (p.tags || []).some(t => t.toLowerCase().includes(q))
+    );
+  }
+  document.getElementById('proj-count').textContent = filtered.length + ' record' + (filtered.length !== 1 ? 's' : '');
+  document.getElementById('stat-projects').textContent = allProjects.length + '+';
+
+  if (!filtered.length) {
+    grid.innerHTML = '<div class="empty-state"><div class="empty-icon">🔍</div><div class="empty-msg">No projects match your search.</div></div>';
+    return;
+  }
+  grid.innerHTML = filtered.map(p => `
+    <div class="project-card">
+      <div class="card-top">
+        <div class="card-type-row">
+          <span class="card-badge ${badgeClass(p.category)}">${p.type || p.category}</span>
+          <span class="card-id">${p.id}</span>
+        </div>
+        <div class="card-name">${p.name}</div>
+        <div class="card-desc">${p.desc}</div>
+      </div>
+      <div class="card-bottom">
+        <div class="card-tags">${(p.tags||[]).map(t => `<span class="ctag">${t}</span>`).join('')}</div>
+        ${p.link ? `<a class="card-link" href="${p.link}" target="_blank">↗ View</a>` : '<span style="font-size:11px;color:var(--muted)">Client Work</span>'}
+      </div>
+    </div>
+  `).join('');
+}
+
+function filterProjects(cat, btn) {
+  currentFilter = cat;
+  document.querySelectorAll('.ftab').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderProjects();
+}
+
+function searchProjects(val) {
+  currentSearch = val;
+  renderProjects();
+}
+
+// ── RENDER SERVICES ──
+function renderServices() {
+  const svcs = getData('services', DEFAULT_SERVICES);
+  document.getElementById('svc-count').textContent = svcs.length + ' records';
+  document.getElementById('stat-services').textContent = svcs.length;
+  document.getElementById('services-grid').innerHTML = svcs.map(s => `
+    <div class="svc-card">
+      <div class="svc-icon" style="background:rgba(108,99,255,0.1)">${s.icon || '🔧'}</div>
+      <div class="svc-name">${s.name}</div>
+      <div class="svc-desc">${s.desc}</div>
+      <ul class="svc-includes">${(s.includes||[]).map(i => `<li>${i}</li>`).join('')}</ul>
+      <div class="svc-price">${s.price}</div>
+      <div class="svc-unit">${s.unit}</div>
+      <a class="svc-hire" href="contact.html">Book Now →</a>
+    </div>
+  `).join('');
+}
+
+// ── RENDER SKILLS ──
+function renderSkills() {
+  const skills = getData('skills', DEFAULT_SKILLS);
+  document.getElementById('skills-count').textContent = skills.length + ' records';
+  document.getElementById('skills-grid').innerHTML = skills.map(s => `
+    <div class="skill-row">
+      <div class="skill-top">
+        <span class="skill-name">${s.name}</span>
+        <span class="skill-level">${s.level}</span>
+      </div>
+      <div class="skill-bar"><div class="skill-fill" style="width:${s.pct}%;background:${s.color || '#6c63ff'}"></div></div>
+      <span class="skill-cat">${s.category}</span>
+    </div>
+  `).join('');
+}
+
+// ── INIT ──
+renderProjects();
+renderServices();
+renderSkills();
+</script>
+</body>
+</html>

@@ -1,0 +1,780 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin — XN Digital Studio</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+
+  :root {
+    --bg: #0a0a0f;
+    --surface: #111118;
+    --surface2: #1a1a24;
+    --border: #252535;
+    --accent: #6c63ff;
+    --accent2: #00d4ff;
+    --accent3: #ff6584;
+    --accent4: #43e97b;
+    --text: #e8e8f0;
+    --muted: #6b6b88;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: var(--bg); color: var(--text); font-family: 'Space Grotesk', sans-serif; min-height: 100vh; }
+
+  /* ── LOGIN SCREEN ── */
+  #login-screen {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+  }
+  .login-box {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 48px 40px;
+    width: 100%;
+    max-width: 380px;
+    text-align: center;
+  }
+  .login-logo {
+    width: 56px; height: 56px;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    border-radius: 14px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 22px; font-weight: 700; color: #fff;
+    margin: 0 auto 20px;
+  }
+  .login-title { font-size: 20px; font-weight: 700; margin-bottom: 6px; }
+  .login-sub { font-size: 13px; color: var(--muted); margin-bottom: 32px; }
+  .login-field {
+    width: 100%;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 12px 16px;
+    color: var(--text);
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 14px;
+    outline: none;
+    margin-bottom: 14px;
+    transition: border-color 0.2s;
+    text-align: center;
+    letter-spacing: 3px;
+  }
+  .login-field:focus { border-color: var(--accent); }
+  .login-btn {
+    width: 100%;
+    background: var(--accent);
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    padding: 13px;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.15s;
+  }
+  .login-btn:hover { background: #5a52e0; }
+  .login-error {
+    color: var(--accent3);
+    font-size: 13px;
+    margin-top: 12px;
+    display: none;
+  }
+
+  /* ── ADMIN PANEL ── */
+  #admin-panel { display: none; }
+
+  /* TOPBAR */
+  .topbar {
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    padding: 0 28px;
+    height: 58px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky; top: 0; z-index: 100;
+  }
+  .topbar-brand { display: flex; align-items: center; gap: 10px; }
+  .topbar-logo {
+    width: 32px; height: 32px;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 13px; font-weight: 700; color: #fff;
+  }
+  .topbar-name { font-weight: 600; font-size: 15px; }
+  .topbar-badge {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    background: rgba(255,101,132,0.15);
+    color: var(--accent3);
+    padding: 4px 10px;
+    border-radius: 20px;
+    border: 1px solid rgba(255,101,132,0.25);
+  }
+  .topbar-right { display: flex; gap: 10px; align-items: center; }
+  .tb-btn {
+    background: none;
+    border: 1px solid var(--border);
+    color: var(--muted);
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 12.5px;
+    padding: 7px 14px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.15s;
+    text-decoration: none;
+    display: inline-flex; align-items: center; gap: 5px;
+  }
+  .tb-btn:hover { color: var(--text); border-color: var(--text); }
+  .tb-btn.danger:hover { color: var(--accent3); border-color: var(--accent3); }
+
+  /* LAYOUT */
+  .shell { display: flex; min-height: calc(100vh - 58px); }
+
+  /* SIDEBAR */
+  .sidebar {
+    width: 200px;
+    background: var(--surface);
+    border-right: 1px solid var(--border);
+    padding: 20px 12px;
+    flex-shrink: 0;
+  }
+  .sidebar-label {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: var(--muted);
+    font-family: 'JetBrains Mono', monospace;
+    padding: 0 8px;
+    margin-bottom: 6px;
+  }
+  .sbar-item {
+    display: flex; align-items: center; gap: 9px;
+    padding: 9px 10px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 13.5px;
+    font-weight: 500;
+    color: var(--muted);
+    transition: all 0.15s;
+    margin-bottom: 2px;
+  }
+  .sbar-item:hover { background: var(--surface2); color: var(--text); }
+  .sbar-item.active { background: rgba(108,99,255,0.12); color: var(--accent); }
+
+  /* MAIN */
+  .main { flex: 1; padding: 28px; overflow: auto; }
+
+  /* SECTION PANELS */
+  .panel { display: none; }
+  .panel.active { display: block; }
+
+  /* PANEL HEADER */
+  .panel-hdr {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: 20px; flex-wrap: wrap; gap: 12px;
+  }
+  .panel-title { font-size: 18px; font-weight: 600; }
+  .add-btn {
+    background: var(--accent);
+    color: #fff;
+    border: none;
+    border-radius: 9px;
+    padding: 9px 20px;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.15s;
+    display: flex; align-items: center; gap: 6px;
+  }
+  .add-btn:hover { background: #5a52e0; }
+
+  /* RECORDS LIST */
+  .records { display: flex; flex-direction: column; gap: 10px; }
+  .record-row {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px 18px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+  .record-row:hover { border-color: rgba(108,99,255,0.4); }
+  .rec-id {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    white-space: nowrap;
+    min-width: 60px;
+  }
+  .rec-name { font-size: 14px; font-weight: 600; flex: 1; min-width: 150px; }
+  .rec-meta { font-size: 12px; color: var(--muted); flex: 2; min-width: 200px; }
+  .rec-actions { display: flex; gap: 8px; margin-left: auto; flex-shrink: 0; }
+  .rec-btn {
+    background: none;
+    border: 1px solid var(--border);
+    color: var(--muted);
+    font-size: 12px;
+    padding: 6px 13px;
+    border-radius: 7px;
+    cursor: pointer;
+    font-family: 'Space Grotesk', sans-serif;
+    transition: all 0.15s;
+  }
+  .rec-btn:hover { border-color: var(--accent); color: var(--accent); }
+  .rec-btn.del:hover { border-color: var(--accent3); color: var(--accent3); }
+
+  /* MODAL */
+  .modal-overlay {
+    display: none;
+    position: fixed; inset: 0;
+    background: rgba(0,0,0,0.7);
+    z-index: 200;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+  }
+  .modal-overlay.open { display: flex; }
+  .modal {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 32px;
+    width: 100%;
+    max-width: 540px;
+    max-height: 90vh;
+    overflow-y: auto;
+  }
+  .modal h3 { font-size: 18px; font-weight: 600; margin-bottom: 24px; }
+  .field-group { margin-bottom: 16px; }
+  .field-label {
+    display: block;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    margin-bottom: 7px;
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .field-input, .field-select, .field-textarea {
+    width: 100%;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 9px;
+    padding: 10px 14px;
+    color: var(--text);
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 13.5px;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  .field-input:focus, .field-select:focus, .field-textarea:focus { border-color: var(--accent); }
+  .field-textarea { resize: vertical; min-height: 80px; }
+  .field-select option { background: var(--surface2); }
+  .modal-actions { display: flex; gap: 10px; margin-top: 24px; justify-content: flex-end; }
+  .modal-save {
+    background: var(--accent);
+    color: #fff;
+    border: none;
+    border-radius: 9px;
+    padding: 10px 24px;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 13.5px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.15s;
+  }
+  .modal-save:hover { background: #5a52e0; }
+  .modal-cancel {
+    background: none;
+    border: 1px solid var(--border);
+    color: var(--muted);
+    border-radius: 9px;
+    padding: 10px 20px;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 13.5px;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .modal-cancel:hover { color: var(--text); border-color: var(--text); }
+
+  /* TOAST */
+  #toast {
+    position: fixed;
+    bottom: 28px; right: 28px;
+    background: var(--surface);
+    border: 1px solid var(--accent4);
+    color: var(--accent4);
+    font-size: 13.5px;
+    font-weight: 500;
+    padding: 12px 20px;
+    border-radius: 10px;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: all 0.25s;
+    z-index: 300;
+    pointer-events: none;
+  }
+  #toast.show { opacity: 1; transform: translateY(0); }
+
+  /* STATS */
+  .admin-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 14px;
+    margin-bottom: 28px;
+  }
+  .admin-stat {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 18px;
+  }
+  .admin-stat-num {
+    font-size: 28px;
+    font-weight: 700;
+    font-family: 'JetBrains Mono', monospace;
+    background: linear-gradient(90deg, var(--accent), var(--accent2));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .admin-stat-lbl { font-size: 12px; color: var(--muted); margin-top: 3px; }
+
+  @media (max-width: 640px) {
+    .sidebar { display: none; }
+    .main { padding: 16px; }
+    .modal { padding: 24px 18px; }
+    .login-box { padding: 36px 24px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- LOGIN -->
+<div id="login-screen">
+  <div class="login-box">
+    <div class="login-logo">XN</div>
+    <div class="login-title">Admin Access</div>
+    <div class="login-sub">XN Digital Studio — Database Panel</div>
+    <input class="login-field" type="password" id="pw-input" placeholder="Enter password" onkeydown="if(event.key==='Enter')doLogin()" />
+    <button class="login-btn" onclick="doLogin()">Enter Panel</button>
+    <div class="login-error" id="login-err">Incorrect password. Try again.</div>
+  </div>
+</div>
+
+<!-- ADMIN PANEL -->
+<div id="admin-panel">
+
+  <!-- TOPBAR -->
+  <div class="topbar">
+    <div class="topbar-brand">
+      <div class="topbar-logo">XN</div>
+      <span class="topbar-name">XN Digital Studio</span>
+      <span class="topbar-badge">ADMIN</span>
+    </div>
+    <div class="topbar-right">
+      <a class="tb-btn" href="database.html" target="_blank">↗ View Public Page</a>
+      <button class="tb-btn danger" onclick="doLogout()">Log Out</button>
+    </div>
+  </div>
+
+  <div class="shell">
+    <!-- SIDEBAR -->
+    <div class="sidebar">
+      <div class="sidebar-label" style="margin-bottom:10px">Sections</div>
+      <div class="sbar-item active" onclick="showPanel('overview', this)">📊 Overview</div>
+      <div class="sbar-item" onclick="showPanel('projects', this)">📁 Projects</div>
+      <div class="sbar-item" onclick="showPanel('services', this)">⚙️ Services</div>
+      <div class="sbar-item" onclick="showPanel('skills', this)">🛠️ Skills</div>
+    </div>
+
+    <!-- MAIN -->
+    <div class="main">
+
+      <!-- OVERVIEW -->
+      <div class="panel active" id="panel-overview">
+        <div class="panel-hdr"><div class="panel-title">Overview</div></div>
+        <div class="admin-stats" id="overview-stats"></div>
+        <p style="color:var(--muted);font-size:13.5px;line-height:1.7">
+          Welcome back, Treadway. Use the sidebar to manage your Projects, Services, and Skills.<br>
+          All changes save instantly to your browser and appear live on the public <a href="database.html" style="color:var(--accent2)">database.html</a> page.
+        </p>
+      </div>
+
+      <!-- PROJECTS -->
+      <div class="panel" id="panel-projects">
+        <div class="panel-hdr">
+          <div class="panel-title">Projects <span id="proj-badge" style="font-size:13px;color:var(--muted);font-weight:400"></span></div>
+          <button class="add-btn" onclick="openModal('project')">+ Add Project</button>
+        </div>
+        <div class="records" id="proj-records"></div>
+      </div>
+
+      <!-- SERVICES -->
+      <div class="panel" id="panel-services">
+        <div class="panel-hdr">
+          <div class="panel-title">Services <span id="svc-badge" style="font-size:13px;color:var(--muted);font-weight:400"></span></div>
+          <button class="add-btn" onclick="openModal('service')">+ Add Service</button>
+        </div>
+        <div class="records" id="svc-records"></div>
+      </div>
+
+      <!-- SKILLS -->
+      <div class="panel" id="panel-skills">
+        <div class="panel-hdr">
+          <div class="panel-title">Skills <span id="skill-badge" style="font-size:13px;color:var(--muted);font-weight:400"></span></div>
+          <button class="add-btn" onclick="openModal('skill')">+ Add Skill</button>
+        </div>
+        <div class="records" id="skill-records"></div>
+      </div>
+
+    </div><!-- /main -->
+  </div><!-- /shell -->
+</div><!-- /admin-panel -->
+
+<!-- MODAL -->
+<div class="modal-overlay" id="modal-overlay" onclick="if(event.target===this)closeModal()">
+  <div class="modal">
+    <h3 id="modal-title">Add Record</h3>
+    <div id="modal-body"></div>
+    <div class="modal-actions">
+      <button class="modal-cancel" onclick="closeModal()">Cancel</button>
+      <button class="modal-save" onclick="saveRecord()">Save</button>
+    </div>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div id="toast">✓ Saved</div>
+
+<script>
+// ── PASSWORD ── Change this to your own password ──
+const ADMIN_PASSWORD = 'xnstudio2025';
+
+// ── DEFAULT DATA ──
+const DEFAULT_PROJECTS = [
+  { id:'PRJ-001', name:'PhilipsBlock Finance', category:'Web', type:'Web App', desc:'Crypto finance SPA with live CoinGecko API prices, interactive games, price ticker, and a JavaScript router — single HTML file on GitHub Pages.', tags:'HTML,CSS,JavaScript,CoinGecko API', link:'https://treadwayphilips.github.io/' },
+  { id:'PRJ-002', name:'Pwesh Palate', category:'Web', type:'Restaurant Site', desc:'Multi-page Nigerian restaurant website with food menu, category filters, online ordering/booking form, and full mobile responsiveness.', tags:'HTML,CSS,JavaScript', link:'https://treadwayphilips.github.io/pweshpalate/' },
+  { id:'PRJ-003', name:'Trebach Shopping Store', category:'Web', type:'E-Commerce', desc:'Online store with Add to Cart, quantity controls, price filters, sort options, and a checkout flow.', tags:'HTML,CSS,JavaScript,E-Commerce', link:'https://treadwayphilips.github.io/Trebach---Shopping-Web/' },
+  { id:'PRJ-004', name:'Stainlessstill Laundry & Cleaning', category:'Brand', type:'Brand Design', desc:'Full branding package — business cards, storefront banners, and logo with pixel-level placement for a local laundry business in Abuja.', tags:'Graphic Design,Branding,Print', link:'' },
+  { id:'PRJ-005', name:'Joy Stitches Fashion Brand', category:'Brand', type:'Brand Design', desc:'Promotional banners in wine/burgundy and navy/gold variants for an Abuja fashion brand. Includes PDF flyer conversion for print.', tags:'Graphic Design,Fashion,Banner', link:'' },
+  { id:'PRJ-006', name:"Paul's Kraft Furniture", category:'Brand', type:'Brand Design', desc:'Multi-variant promotional banners for a furniture brand, modelled after a precise reference layout.', tags:'Graphic Design,Promotional', link:'' },
+  { id:'PRJ-007', name:'Presh Essentials', category:'Brand', type:'Brand Identity', desc:'Complete brand identity for a nightwear & deodorant company — logos, brand cards, and promotional banners across multiple colour variants.', tags:'Logo Design,Branding,Multi-variant', link:'' },
+  { id:'PRJ-008', name:'JOBITECH Instructor ID Card', category:'Print', type:'Print Design', desc:'Print-ready instructor ID card for JOBITECH Institute of Technology Kubwa, Abuja — professional print standards, exported as JPG.', tags:'Print Design,ID Card', link:'' },
+  { id:'PRJ-009', name:'XN Digital Studio Brand', category:'Personal', type:'Personal Brand', desc:'Personal tech brand — futuristic banners in Cyber Blue, Neon Purple & Gold Tech variants, portfolio intro cards, and brand auth assets.', tags:'Personal,Branding,Multi-variant', link:'about.html' },
+];
+
+const DEFAULT_SERVICES = [
+  { id:'SVC-001', name:'Web Development', icon:'💻', desc:'Custom websites built from scratch — fast, responsive, and ready to deploy on any platform.', includes:'HTML, CSS & JavaScript\nMobile-first & responsive\nGitHub Pages / Netlify deploy\nPortfolio, business & e-commerce', price:'$315', unit:'per website' },
+  { id:'SVC-002', name:'UI/UX Design', icon:'🎨', desc:'User-centred interface design that looks great and converts visitors into customers.', includes:'Wireframes & prototypes\nModern, clean layouts\nDesign systems & style guides', price:'$120', unit:'per project' },
+  { id:'SVC-003', name:'Graphic Design', icon:'✏️', desc:'Logos, banners, business cards, and brand identities that make your business unforgettable.', includes:'Logo & brand identity\nSocial media graphics\nFlyers, banners & print', price:'$15', unit:'per design' },
+  { id:'SVC-004', name:'Data Analysis', icon:'📊', desc:'Data-driven insights and visual reports for business decision-making.', includes:'Data cleaning & processing\nCharts & dashboards\nInsight reports', price:'Contact', unit:'for quote' },
+  { id:'SVC-005', name:'Cisco Networking', icon:'🌐', desc:'Network setup, configuration, and maintenance for small businesses.', includes:'Network design & setup\nHardware configuration\nPrinter & device servicing', price:'Contact', unit:'for quote' },
+];
+
+const DEFAULT_SKILLS = [
+  { name:'HTML5', category:'Web Dev', level:'Expert', pct:95, color:'#6c63ff' },
+  { name:'CSS3', category:'Web Dev', level:'Expert', pct:92, color:'#6c63ff' },
+  { name:'JavaScript', category:'Web Dev', level:'Advanced', pct:85, color:'#6c63ff' },
+  { name:'REST APIs', category:'Web Dev', level:'Proficient', pct:75, color:'#00d4ff' },
+  { name:'GitHub Pages', category:'Deployment', level:'Expert', pct:90, color:'#00d4ff' },
+  { name:'Responsive Design', category:'UI/UX', level:'Expert', pct:90, color:'#6c63ff' },
+  { name:'UI/UX Design', category:'UI/UX', level:'Advanced', pct:82, color:'#00d4ff' },
+  { name:'Logo Design', category:'Graphic', level:'Advanced', pct:88, color:'#ff6584' },
+  { name:'Brand Identity', category:'Graphic', level:'Advanced', pct:86, color:'#ff6584' },
+  { name:'Print Design', category:'Graphic', level:'Proficient', pct:80, color:'#ff6584' },
+  { name:'Hardware Repair', category:'ICT', level:'Proficient', pct:70, color:'#ffc832' },
+  { name:'Cisco Networking', category:'ICT', level:'Working', pct:65, color:'#ffc832' },
+];
+
+// ── STORAGE HELPERS ──
+function load(key, fallback) {
+  try { const r = localStorage.getItem('xndb_' + key); return r ? JSON.parse(r) : fallback; }
+  catch(e) { return fallback; }
+}
+function save(key, data) {
+  localStorage.setItem('xndb_' + key, JSON.stringify(data));
+}
+
+// ── LOGIN ──
+function doLogin() {
+  const pw = document.getElementById('pw-input').value;
+  if (pw === ADMIN_PASSWORD) {
+    document.getElementById('login-screen').style.display = 'none';
+    document.getElementById('admin-panel').style.display = 'block';
+    initAdmin();
+  } else {
+    document.getElementById('login-err').style.display = 'block';
+    document.getElementById('pw-input').value = '';
+    document.getElementById('pw-input').focus();
+  }
+}
+function doLogout() {
+  document.getElementById('login-screen').style.display = 'flex';
+  document.getElementById('admin-panel').style.display = 'none';
+  document.getElementById('pw-input').value = '';
+  document.getElementById('login-err').style.display = 'none';
+}
+
+// ── PANELS ──
+function showPanel(name, el) {
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.sbar-item').forEach(s => s.classList.remove('active'));
+  document.getElementById('panel-' + name).classList.add('active');
+  el.classList.add('active');
+}
+
+// ── TOAST ──
+function toast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = '✓ ' + msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2200);
+}
+
+// ── GENERATE ID ──
+function nextId(prefix, arr) {
+  const nums = arr.map(r => parseInt((r.id || '0').replace(/\D/g, '')) || 0);
+  const max = nums.length ? Math.max(...nums) : 0;
+  return prefix + '-' + String(max + 1).padStart(3, '0');
+}
+
+// ── RENDER PROJECTS ──
+function renderProjects() {
+  const projs = load('projects', DEFAULT_PROJECTS);
+  document.getElementById('proj-badge').textContent = '— ' + projs.length + ' records';
+  document.getElementById('proj-records').innerHTML = projs.length ? projs.map((p, i) => `
+    <div class="record-row">
+      <span class="rec-id">${p.id}</span>
+      <span class="rec-name">${p.name}</span>
+      <span class="rec-meta">${p.category} · ${p.type} · ${(p.tags||'').split(',').slice(0,3).join(', ')}</span>
+      <div class="rec-actions">
+        <button class="rec-btn" onclick="editProject(${i})">Edit</button>
+        <button class="rec-btn del" onclick="deleteProject(${i})">Delete</button>
+      </div>
+    </div>
+  `).join('') : '<div style="color:var(--muted);font-size:14px;padding:20px">No projects yet. Click + Add Project.</div>';
+}
+
+function deleteProject(i) {
+  if (!confirm('Delete this project?')) return;
+  const projs = load('projects', DEFAULT_PROJECTS);
+  projs.splice(i, 1);
+  save('projects', projs);
+  renderProjects();
+  updateOverview();
+  toast('Project deleted');
+}
+
+// ── RENDER SERVICES ──
+function renderServices() {
+  const svcs = load('services', DEFAULT_SERVICES);
+  document.getElementById('svc-badge').textContent = '— ' + svcs.length + ' records';
+  document.getElementById('svc-records').innerHTML = svcs.length ? svcs.map((s, i) => `
+    <div class="record-row">
+      <span class="rec-id">${s.id}</span>
+      <span class="rec-name">${s.icon || ''} ${s.name}</span>
+      <span class="rec-meta">${s.price} ${s.unit} · ${s.desc.substring(0,70)}...</span>
+      <div class="rec-actions">
+        <button class="rec-btn" onclick="editService(${i})">Edit</button>
+        <button class="rec-btn del" onclick="deleteService(${i})">Delete</button>
+      </div>
+    </div>
+  `).join('') : '<div style="color:var(--muted);font-size:14px;padding:20px">No services yet.</div>';
+}
+
+function deleteService(i) {
+  if (!confirm('Delete this service?')) return;
+  const svcs = load('services', DEFAULT_SERVICES);
+  svcs.splice(i, 1);
+  save('services', svcs);
+  renderServices();
+  updateOverview();
+  toast('Service deleted');
+}
+
+// ── RENDER SKILLS ──
+function renderSkills() {
+  const skills = load('skills', DEFAULT_SKILLS);
+  document.getElementById('skill-badge').textContent = '— ' + skills.length + ' records';
+  document.getElementById('skill-records').innerHTML = skills.length ? skills.map((s, i) => `
+    <div class="record-row">
+      <span class="rec-name">${s.name}</span>
+      <span class="rec-meta">${s.category} · ${s.level} · ${s.pct}%</span>
+      <div class="rec-actions">
+        <button class="rec-btn" onclick="editSkill(${i})">Edit</button>
+        <button class="rec-btn del" onclick="deleteSkill(${i})">Delete</button>
+      </div>
+    </div>
+  `).join('') : '<div style="color:var(--muted);font-size:14px;padding:20px">No skills yet.</div>';
+}
+
+function deleteSkill(i) {
+  if (!confirm('Delete this skill?')) return;
+  const skills = load('skills', DEFAULT_SKILLS);
+  skills.splice(i, 1);
+  save('skills', skills);
+  renderSkills();
+  updateOverview();
+  toast('Skill deleted');
+}
+
+// ── OVERVIEW ──
+function updateOverview() {
+  const p = load('projects', DEFAULT_PROJECTS).length;
+  const s = load('services', DEFAULT_SERVICES).length;
+  const k = load('skills', DEFAULT_SKILLS).length;
+  document.getElementById('overview-stats').innerHTML = `
+    <div class="admin-stat"><div class="admin-stat-num">${p}</div><div class="admin-stat-lbl">Projects</div></div>
+    <div class="admin-stat"><div class="admin-stat-num">${s}</div><div class="admin-stat-lbl">Services</div></div>
+    <div class="admin-stat"><div class="admin-stat-num">${k}</div><div class="admin-stat-lbl">Skills</div></div>
+  `;
+}
+
+// ── MODAL STATE ──
+let modalMode = null; // 'project' | 'service' | 'skill'
+let editIndex = null;
+
+function openModal(type, prefill, index) {
+  modalMode = type;
+  editIndex = index !== undefined ? index : null;
+  const isEdit = editIndex !== null;
+  document.getElementById('modal-title').textContent = (isEdit ? 'Edit' : 'Add') + ' ' + type.charAt(0).toUpperCase() + type.slice(1);
+  document.getElementById('modal-body').innerHTML = buildForm(type, prefill);
+  document.getElementById('modal-overlay').classList.add('open');
+}
+
+function closeModal() {
+  document.getElementById('modal-overlay').classList.remove('open');
+  modalMode = null; editIndex = null;
+}
+
+function buildForm(type, d) {
+  d = d || {};
+  if (type === 'project') return `
+    <div class="field-group"><label class="field-label">Project Name</label><input class="field-input" id="f-name" value="${d.name||''}" placeholder="e.g. My Portfolio Site" /></div>
+    <div class="field-group"><label class="field-label">Category</label>
+      <select class="field-select" id="f-cat">
+        ${['Web','Brand','Print','Personal'].map(c => `<option value="${c}" ${d.category===c?'selected':''}>${c}</option>`).join('')}
+      </select>
+    </div>
+    <div class="field-group"><label class="field-label">Type / Label</label><input class="field-input" id="f-type" value="${d.type||''}" placeholder="e.g. Web App, Brand Design" /></div>
+    <div class="field-group"><label class="field-label">Description</label><textarea class="field-textarea" id="f-desc" placeholder="Short description of the project...">${d.desc||''}</textarea></div>
+    <div class="field-group"><label class="field-label">Tech / Tools (comma-separated)</label><input class="field-input" id="f-tags" value="${d.tags||''}" placeholder="HTML, CSS, JavaScript" /></div>
+    <div class="field-group"><label class="field-label">Live Link (optional)</label><input class="field-input" id="f-link" value="${d.link||''}" placeholder="https://..." /></div>
+  `;
+  if (type === 'service') return `
+    <div class="field-group"><label class="field-label">Service Name</label><input class="field-input" id="f-name" value="${d.name||''}" placeholder="e.g. Web Development" /></div>
+    <div class="field-group"><label class="field-label">Icon (emoji)</label><input class="field-input" id="f-icon" value="${d.icon||''}" placeholder="💻" style="font-size:20px;width:80px" /></div>
+    <div class="field-group"><label class="field-label">Description</label><textarea class="field-textarea" id="f-desc" placeholder="What does this service cover?">${d.desc||''}</textarea></div>
+    <div class="field-group"><label class="field-label">What's Included (one per line)</label><textarea class="field-textarea" id="f-includes" placeholder="HTML, CSS & JavaScript&#10;Mobile-first responsive&#10;GitHub Pages deploy">${d.includes||''}</textarea></div>
+    <div class="field-group"><label class="field-label">Price</label><input class="field-input" id="f-price" value="${d.price||''}" placeholder="$315 or Contact" /></div>
+    <div class="field-group"><label class="field-label">Unit</label><input class="field-input" id="f-unit" value="${d.unit||''}" placeholder="per website" /></div>
+  `;
+  if (type === 'skill') return `
+    <div class="field-group"><label class="field-label">Skill Name</label><input class="field-input" id="f-name" value="${d.name||''}" placeholder="e.g. JavaScript" /></div>
+    <div class="field-group"><label class="field-label">Category</label><input class="field-input" id="f-cat" value="${d.category||''}" placeholder="Web Dev, Graphic, ICT..." /></div>
+    <div class="field-group"><label class="field-label">Level</label>
+      <select class="field-select" id="f-level">
+        ${['Expert','Advanced','Proficient','Working'].map(l => `<option value="${l}" ${d.level===l?'selected':''}>${l}</option>`).join('')}
+      </select>
+    </div>
+    <div class="field-group"><label class="field-label">Proficiency % (1–100)</label><input class="field-input" id="f-pct" type="number" min="1" max="100" value="${d.pct||75}" /></div>
+    <div class="field-group"><label class="field-label">Bar Color (hex)</label><input class="field-input" id="f-color" value="${d.color||'#6c63ff'}" placeholder="#6c63ff" /></div>
+  `;
+}
+
+function saveRecord() {
+  if (modalMode === 'project') {
+    const projs = load('projects', DEFAULT_PROJECTS);
+    const entry = {
+      id: editIndex !== null ? projs[editIndex].id : nextId('PRJ', projs),
+      name: document.getElementById('f-name').value.trim(),
+      category: document.getElementById('f-cat').value,
+      type: document.getElementById('f-type').value.trim(),
+      desc: document.getElementById('f-desc').value.trim(),
+      tags: document.getElementById('f-tags').value.trim(),
+      link: document.getElementById('f-link').value.trim(),
+    };
+    if (!entry.name) { alert('Project name is required.'); return; }
+    if (editIndex !== null) projs[editIndex] = entry; else projs.push(entry);
+    save('projects', projs);
+    renderProjects();
+    toast(editIndex !== null ? 'Project updated' : 'Project added');
+  }
+
+  if (modalMode === 'service') {
+    const svcs = load('services', DEFAULT_SERVICES);
+    const entry = {
+      id: editIndex !== null ? svcs[editIndex].id : nextId('SVC', svcs),
+      name: document.getElementById('f-name').value.trim(),
+      icon: document.getElementById('f-icon').value.trim(),
+      desc: document.getElementById('f-desc').value.trim(),
+      includes: document.getElementById('f-includes').value.trim(),
+      price: document.getElementById('f-price').value.trim(),
+      unit: document.getElementById('f-unit').value.trim(),
+    };
+    if (!entry.name) { alert('Service name is required.'); return; }
+    if (editIndex !== null) svcs[editIndex] = entry; else svcs.push(entry);
+    save('services', svcs);
+    renderServices();
+    toast(editIndex !== null ? 'Service updated' : 'Service added');
+  }
+
+  if (modalMode === 'skill') {
+    const skills = load('skills', DEFAULT_SKILLS);
+    const entry = {
+      name: document.getElementById('f-name').value.trim(),
+      category: document.getElementById('f-cat').value.trim(),
+      level: document.getElementById('f-level').value,
+      pct: parseInt(document.getElementById('f-pct').value) || 75,
+      color: document.getElementById('f-color').value.trim() || '#6c63ff',
+    };
+    if (!entry.name) { alert('Skill name is required.'); return; }
+    if (editIndex !== null) skills[editIndex] = entry; else skills.push(entry);
+    save('skills', skills);
+    renderSkills();
+    toast(editIndex !== null ? 'Skill updated' : 'Skill added');
+  }
+
+  updateOverview();
+  closeModal();
+}
+
+// ── EDIT HELPERS ──
+function editProject(i) {
+  const p = load('projects', DEFAULT_PROJECTS)[i];
+  openModal('project', p, i);
+}
+function editService(i) {
+  const s = load('services', DEFAULT_SERVICES)[i];
+  openModal('service', s, i);
+}
+function editSkill(i) {
+  const s = load('skills', DEFAULT_SKILLS)[i];
+  openModal('skill', s, i);
+}
+
+// ── INIT ──
+function initAdmin() {
+  updateOverview();
+  renderProjects();
+  renderServices();
+  renderSkills();
+}
+</script>
+</body>
+</html>
